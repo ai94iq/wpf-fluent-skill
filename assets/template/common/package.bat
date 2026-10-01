@@ -8,11 +8,11 @@ rem step, or the error lines plus the log path on failure.
 if not exist "artifacts\logs" mkdir "artifacts\logs"
 
 call test.bat --no-pause
-if errorlevel 1 goto :fail
+if %ERRORLEVEL% neq 0 goto :fail
 call build.bat --no-pause
-if errorlevel 1 goto :fail
+if %ERRORLEVEL% neq 0 goto :fail
 dotnet build "installer\__Product__.Installer.wixproj" -c Release -o "artifacts\installer" -v q -nologo > "artifacts\logs\package.log" 2>&1
-if errorlevel 1 goto :fail
+if %ERRORLEVEL% neq 0 goto :fail
 
 echo [package] OK: artifacts\installer
 goto :end

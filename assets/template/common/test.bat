@@ -8,7 +8,7 @@ rem error lines plus the log path on failure. Humans (no --no-pause) get the ful
 if not exist "artifacts\logs" mkdir "artifacts\logs"
 
 dotnet test "__Product__.slnx" -c Release -v q --nologo > "artifacts\logs\test.log" 2>&1
-if errorlevel 1 goto :fail
+if %ERRORLEVEL% neq 0 goto :fail
 
 echo [test] OK
 goto :end

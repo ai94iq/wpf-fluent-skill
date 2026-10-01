@@ -10,7 +10,7 @@ if not exist "artifacts\logs" mkdir "artifacts\logs"
 
 if exist "%OUT%" rmdir /s /q "%OUT%"
 dotnet publish "src\__Product__.App\__Product__.App.csproj" -c Release -r win-x64 --self-contained true -p:PublishReadyToRun=true -o "%OUT%" -v q -nologo > "artifacts\logs\build.log" 2>&1
-if errorlevel 1 goto :fail
+if %ERRORLEVEL% neq 0 goto :fail
 
 echo [build] OK: %OUT%\__Product__.exe
 goto :end
