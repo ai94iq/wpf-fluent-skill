@@ -13,6 +13,7 @@
   </ItemGroup>
   <ItemGroup>
     <Using Include="Xunit" />
+    <Using Include="System.IO" />
     <Using Include="System.Text.RegularExpressions" />
     <Using Include="System.Xml.Linq" />
     <Using Include="Microsoft.Extensions.Logging.Abstractions" />
