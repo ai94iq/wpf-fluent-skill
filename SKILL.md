@@ -16,7 +16,7 @@ This skill is prescriptive. Every choice in it is final for projects that use it
    - the result ("الاختبارات نجحت" when replying in Arabic);
    - the next step, or one question.
 
-   Don't paste code, file lists or plans into the chat, and don't restate the request. Go longer only when the user asks ("اشرح أكثر").
+   Don't paste code, file lists or plans into the chat, and don't restate the request. Go longer only when the user asks for more detail.
 4. **Use only what this skill specifies.** Don't add, replace or "try" any library, framework, tool, file format or pattern that isn't listed, even one you consider equivalent. If a need truly isn't covered, stop, propose one option in one plain sentence, and wait. Record every approved addition as an ADR (section 7).
 5. **Read only the reference you need:**
    - New project, git, scripts, docs → `references/project-setup.md`
