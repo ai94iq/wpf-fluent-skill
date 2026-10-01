@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="NSubstitute" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="System.Text.RegularExpressions" />
+    <Using Include="System.Xml.Linq" />
+    <Using Include="Microsoft.Extensions.Logging.Abstractions" />
+    <Using Include="__Product__.App.Common" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\__Product__.App\__Product__.App.csproj" />
+  </ItemGroup>
+</Project>

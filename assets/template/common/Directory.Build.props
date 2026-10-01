@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <Version>0.1.0</Version>
+    <Product>__Product__</Product>
+    <Company>__Company__</Company>
+    <Copyright>Copyright (c) __Year__ __Company__</Copyright>
+  </PropertyGroup>
+
+  <!-- C# projects only; the WiX project must not get these -->
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.csproj'">
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+</Project>

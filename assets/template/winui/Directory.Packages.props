@@ -1,0 +1,23 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Versions were the latest stable at scaffold time. Change one only with a reason (commit body). -->
+    <PackageVersion Include="Microsoft.WindowsAppSDK" Version="__V:Microsoft.WindowsAppSDK@1__" />
+    <PackageVersion Include="Microsoft.Windows.SDK.BuildTools" Version="__V:Microsoft.Windows.SDK.BuildTools__" />
+    <PackageVersion Include="CommunityToolkit.Mvvm" Version="__V:CommunityToolkit.Mvvm@8__" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="__V:Microsoft.Extensions.Hosting@10__" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="__V:Microsoft.Extensions.Caching.Memory@10__" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="__V:Microsoft.Extensions.Logging.Abstractions@10__" />
+    <PackageVersion Include="Serilog.Extensions.Hosting" Version="__V:Serilog.Extensions.Hosting@10__" />
+    <PackageVersion Include="Serilog.Sinks.File" Version="__V:Serilog.Sinks.File__" />
+    <PackageVersion Include="Serilog.Sinks.Async" Version="__V:Serilog.Sinks.Async__" />
+    <PackageVersion Include="Microsoft.Data.Sqlite" Version="__V:Microsoft.Data.Sqlite@10__" />
+    <PackageVersion Include="Dapper" Version="__V:Dapper@2__" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="__V:Microsoft.NET.Test.Sdk__" />
+    <PackageVersion Include="xunit.v3" Version="__V:xunit.v3__" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="__V:xunit.runner.visualstudio@3__" />
+    <PackageVersion Include="NSubstitute" Version="__V:NSubstitute@5__" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,19 @@
+# OS cruft
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Local agent scratch
+*.log
+tmp/
+
+# NOTE: build output (bin/, obj/), local *.db and secrets under the shipped
+# template are ignored by assets/template/common/.gitignore, which is itself a
+# template file committed on purpose. Do not duplicate those rules here.
