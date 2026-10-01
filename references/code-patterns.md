@@ -7,10 +7,9 @@ Contents
 2. Page with loading states
 3. Paged list
 4. Search with debounce
-5. Lazy tree node
-6. Repository: SQL, cache, change notification
-7. Tests: ViewModel, repository, Core
-8. resx entries and plurals
+5. Repository: SQL, cache, change notification
+6. Tests: ViewModel, repository, Core
+7. resx entries and plurals
 
 ## 1. Template index
 
@@ -158,53 +157,7 @@ private async Task SearchDebouncedAsync(string query)
 }
 ```
 
-## 5. Lazy tree node
-
-A placeholder child shows the expander; children load on first expand. Compute `hasChildren` with `EXISTS (...)` in the query that loads the node. WPF binds `IsExpanded` in the `TreeView` item container style; WinUI uses `TreeView` with `HasUnrealizedChildren` and the `Expanding` event.
-
-```csharp
-public sealed partial class NodeViewModel : ObservableObject
-{
-    private readonly Func<CancellationToken, Task<IReadOnlyList<NodeViewModel>>>? _loadChildren;
-    private readonly ILogger _log;
-    private bool _loaded;
-
-    public NodeViewModel(string title, bool hasChildren,
-        Func<CancellationToken, Task<IReadOnlyList<NodeViewModel>>>? loadChildren, ILogger log)
-    {
-        Title = title;
-        _loadChildren = loadChildren;
-        _log = log;
-        if (hasChildren) Children.Add(new NodeViewModel("…", false, null, log));
-    }
-
-    public string Title { get; }
-
-    public ObservableCollection<NodeViewModel> Children { get; } = [];
-
-    [ObservableProperty]
-    public partial bool IsExpanded { get; set; }
-
-    async partial void OnIsExpandedChanged(bool value)
-    {
-        if (!value || _loaded || _loadChildren is null) return;
-        _loaded = true;
-        try
-        {
-            var items = await _loadChildren(CancellationToken.None);
-            Children.Clear();
-            foreach (var child in items) Children.Add(child);
-        }
-        catch (Exception ex)
-        {
-            _loaded = false;
-            _log.LogError(ex, "Loading children failed for node {Title}", Title);
-        }
-    }
-}
-```
-
-## 6. Repository: SQL, cache, change notification
+## 5. Repository: SQL, cache, change notification
 
 ```csharp
 public sealed class PersonRepository(
@@ -232,7 +185,7 @@ public sealed class PersonRepository(
 }
 ```
 
-## 7. Tests: ViewModel, repository, Core
+## 6. Tests: ViewModel, repository, Core
 
 ViewModel (substitute the interfaces, assert observable behavior):
 
@@ -276,7 +229,7 @@ In xUnit v3, pass `TestContext.Current.CancellationToken` to async calls (its an
 
 Core: plain `[Theory]` + `[InlineData]` tables, as in `ArabicTextTests` and `ArabicPluralTests`.
 
-## 8. resx entries and plurals
+## 7. resx entries and plurals
 
 Add every new key to both files, keeping them sorted. `LocalizationTests` fails otherwise.
 

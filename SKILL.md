@@ -306,7 +306,6 @@ Pages load their own data when navigated to, never in constructors. DI lifetimes
 | Lists | Keyset paging, 50 per page, load-more on scroll. Never `OFFSET` |
 | Wide rows, notes, photos | Separate tables; list queries select list columns only |
 | Images | Thumbnails decoded at display size when visible, then frozen |
-| Tree nodes | Placeholder child; load on first expand; `hasChildren` via `EXISTS` |
 | Search | 300 ms debounce; cancel the previous query |
 
 Caching layers, cheapest first:
@@ -369,7 +368,7 @@ Follow `references/ui-ux.md` for every screen. The non-negotiables:
 1. Anything outside the locked stack or this skill's patterns. Duplicated logic that already has a home (section 2).
 2. Missing tests for new behavior, skipped tests, stale docs, a malformed commit message, files over their limits.
 3. Blocking calls on the UI thread; UI types in ViewModels; data loaded in constructors.
-4. SQL built by concatenation, culture-formatted stored dates, `int` in Dapper rows, edited migrations, `OFFSET` paging, a query per row or node.
+4. SQL built by concatenation, culture-formatted stored dates, `int` in Dapper rows, edited migrations, `OFFSET` paging, a query per row.
 5. Caches without size, expiry or eviction; cached failures; shared mutable cached objects.
 6. Hard-coded strings or colors; resx drift; number + word instead of plural keys.
 7. RTL problems: mirrored images, unflagged directional icons, LTR inputs typed RTL, dates formatted in XAML.
