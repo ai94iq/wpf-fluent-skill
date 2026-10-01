@@ -34,7 +34,6 @@ search
 settings
 share
 sign_out
-tree_deciduous
 warning
 weather_moon
 weather_sunny
