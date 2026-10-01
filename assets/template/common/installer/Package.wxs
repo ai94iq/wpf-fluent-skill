@@ -46,7 +46,7 @@
                   Target="[#AppExeFile]"
                   WorkingDirectory="INSTALLFOLDER"
                   Icon="AppIcon" />
-        <RegistryValue Root="HKMU" Key="Software\__Company__\__Product__"
+        <RegistryValue Root="HKCU" Key="Software\__Company__\__Product__"
                        Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
       </Component>
     </StandardDirectory>
