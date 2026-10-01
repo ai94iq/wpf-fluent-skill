@@ -13,7 +13,7 @@ The UI framework is chosen once, when the project is created (`new-project.bat .
 
 - Default to **WPF + WPF-UI**.
 - Use **WinUI 3** only if the user explicitly wants it after hearing the summary below, or needs something only WinUI does well: touch and pen as the main input, or the exact Windows 11 look and motion.
-- For family-tree apps with large drawings, keep WPF: its custom-drawing path (`DrawingVisual`) handles thousands of people, and WinUI would need an extra library (Win2D) that isn't in the stack.
+- For apps that draw heavily (thousands of shapes), keep WPF: its custom-drawing path (`DrawingVisual`) handles that volume, and WinUI would need an extra library (Win2D) that isn't in the stack.
 
 If the user hasn't chosen, ask once, using the summary below, and recommend WPF-UI.
 

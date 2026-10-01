@@ -112,7 +112,7 @@ Use the Fluent type ramp only:
   - WPF applies theme and accent live.
   - WinUI applies the theme live; the accent needs a restart.
 - **High Contrast:** Windows High Contrast always overrides the user's theme and accent. Never fight it.
-- **Never hard-code colors.** The only exceptions are the accent swatches on the settings page and the pictorial family-tree palette.
+- **Never hard-code colors.** The only exception is the accent swatches on the settings page.
 - Test every screen in Light and Dark before committing UI work, and tell the user what to check.
 
 **Settings section (WPF):**
@@ -280,7 +280,7 @@ Show a counter (`Tr.Format("Common_CharCount", n, max)`) only when the limit is 
 
 - Its calendar is Gregorian and follows the app culture.
 - Show the chosen date elsewhere through `IDateFormatter`.
-- Partial or Hijri dates (genealogy): use a small composite input.
+- Partial or Hijri dates: use a small composite input.
   1. A precision `ComboBox` (unknown, year, month, day, approximate).
   2. A year `NumberBox`, plus month and day `ComboBox`es shown according to the precision. Hijri month names come from `HijriMonth_1..12`.
   3. The ViewModel converts with `UmAlQuraCalendar` (or `HijriCalendar` outside 1900–2077) and checks the day against `GetDaysInMonth`.

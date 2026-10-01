@@ -1,6 +1,6 @@
 ---
 name: wpf-fluent-rtl
-description: Prescriptive rules and scaffolding scripts for native Windows 10/11 desktop apps in C# with WPF + WPF-UI (default) or WinUI 3, CommunityToolkit.Mvvm, Generic Host, Serilog, SQLite with Dapper, IMemoryCache, resx localization and a WiX MSI, with Arabic/RTL support, modern outline-icon styling, light/dark/accent theming, test-first automation, DRY/KISS and family-tree drawing. Covers project scaffolding, git commit format, bat scripts, forms and inputs, loading states, lazy loading, caching and token-efficient agent behavior. Use whenever the user creates, scaffolds, writes, reviews, styles, tests, builds, packages, commits or debugs a Windows desktop app, XAML, ViewModels, forms, SQLite, localization or installers, or mentions WPF, WinUI, Arabic, RTL, Hijri, WiX, MSI, icons, themes, dark mode, genealogy, family tree or شجرة العائلة. Agents using this skill reply to the user in Arabic.
+description: Prescriptive rules and scaffolding scripts for native Windows 10/11 desktop apps in C# with WPF + WPF-UI (default) or WinUI 3, CommunityToolkit.Mvvm, Generic Host, Serilog, SQLite with Dapper, IMemoryCache, resx localization and a WiX MSI, with Arabic/RTL support, modern outline-icon styling, light/dark/accent theming, test-first automation and DRY/KISS. Covers project scaffolding, git commit format, bat scripts, forms and inputs, loading states, lazy loading, caching and token-efficient agent behavior. Use whenever the user creates, scaffolds, writes, reviews, styles, tests, builds, packages, commits or debugs a Windows desktop app, XAML, ViewModels, forms, SQLite, localization or installers, or mentions WPF, WinUI, Arabic, RTL, Hijri, WiX, MSI, icons, themes, dark mode. Agents using this skill reply to the user in Arabic.
 ---
 
 # Windows desktop apps — Arabic/RTL, Windows 10 & 11
@@ -24,7 +24,6 @@ This skill is prescriptive. Every choice in it is final for projects that use it
    - Screens, forms, inputs, styling, icons, themes → `references/ui-ux.md`
    - WPF-UI vs WinUI 3, and WinUI-specific rules → `references/ui-frameworks.md`
    - Installer and releases → `references/installer.md`
-   - Family trees → `references/family-tree.md`
 6. **Definition of done** for every feature, in this order:
    1. Write the tests first (section 4).
    2. Implement until they pass.
@@ -64,7 +63,7 @@ Output:
 | JSON | `System.Text.Json` | Newtonsoft.Json |
 | Localization | `.resx` + `Tr`; Arabic neutral, English satellite | Hard-coded UI text, generated `Designer.cs`, `.resw`/`x:Uid`, JSON localization |
 | Icons | Fluent UI System Icons, 24px Regular (outline), via `add-icons.bat` and `AppIcon` | Icon fonts (Segoe Fluent Icons is Windows 11-only), emoji, PNG icons, other icon packs |
-| Fonts | Noto Sans Arabic (UI); Amiri + Aref Ruqaa (pictorial tree only) | Any other bundled font |
+| Fonts | Noto Sans Arabic with Segoe UI fallback for Arabic UIs; otherwise the system UI font | Any other bundled font |
 | Tests | xUnit v3 + NSubstitute; pre-commit hook | MSTest, NUnit, Moq, FluentAssertions, UI automation (FlaUI, WinAppDriver, Appium) |
 | Installer | WiX Toolset v6 MSI | Inno Setup, NSIS, MSIX, ClickOnce, Velopack, Squirrel |
 | Packages | Central Package Management | Versions in `.csproj` files |
@@ -102,7 +101,7 @@ MyApp/
 │   │   ├── Resources/       Strings.resx (ar), Strings.en.resx, Styles.xaml, Icons.g.cs, icons.txt
 │   │   ├── Services/        DialogService, DateFormatter, ThemeService, DataChangeNotifier
 │   │   └── Shell/           MainWindow, MainWindowViewModel
-│   ├── MyApp.Core/  pure C#: Models, Abstractions, Caching, Text, Theming, FamilyTree/Layout
+│   ├── MyApp.Core/  pure C#: Models, Abstractions, Caching, Text, Theming
 │   └── MyApp.Data/  SQLite + Dapper: Migrations/, Repositories/, connection factory, initializer
 ├── tests/           MyApp.Core.Tests, MyApp.Data.Tests, MyApp.App.Tests
 ├── installer/       WiX v6 project
@@ -344,7 +343,7 @@ Follow `references/ui-ux.md` for every screen. The non-negotiables:
 - **No AI-slop styling:** no gradients, glows, colored card backgrounds, heavy borders, custom drop shadows, emoji or decorative illustrations.
 - **Icons:** outline only, through `AppIcon`, at 16, 20 or 24 px, in the text color. Icon-only buttons need a tooltip and an accessible name.
 - **Forms:** single column, label above the field, inline error below, one primary button.
-- **Theming:** System, Light or Dark, plus an accent from `AccentPresets` or the Windows accent, all through `IThemeService`. High Contrast always wins. Never hard-code colors; the only exceptions are accent presets and the pictorial tree palette.
+- **Theming:** System, Light or Dark, plus an accent from `AccentPresets` or the Windows accent, all through `IThemeService`. High Contrast always wins. Never hard-code colors; the only exception is the accent presets.
 - **Accessibility:** full keyboard use, visible focus, at least 4.5:1 contrast, and meaning never carried by color alone.
 
 ## 15. Logging
@@ -359,24 +358,13 @@ Follow `references/ui-ux.md` for every screen. The non-negotiables:
 - Zero binding errors. Flat panel trees. Heavy converter logic moves into ViewModels.
 - Measure with the Visual Studio profiler before optimizing.
 
-## 17. Family trees
-
-Read `references/family-tree.md` before any family-tree code. The non-negotiables:
-- Union-based model.
-- One pure-C# layout engine for both the diagram view and the pictorial view.
-- Lazy generations and photos, with an identity map.
-- One frozen geometry for all connectors.
-- In RTL, the eldest child goes on the right and photos are never mirrored.
-
-The family-tree reference targets WPF; with WinUI, use only its template-based tiers (up to about 3,000 nodes).
-
-## 18. Publishing and installer
+## 17. Publishing and installer
 
 - `build.bat` publishes `win-x64`, self-contained, ReadyToRun. No Native AOT, trimming, single-file or ARM64.
 - `package.bat` builds the WiX v6 MSI (`references/installer.md`). The version lives only in `Directory.Build.props`, and every shipped MSI gets a higher one.
 - Before each release, test a fresh install and an upgrade on Windows 10 22H2 and Windows 11, as a standard user.
 
-## 19. Review checklist
+## 18. Review checklist
 
 1. Anything outside the locked stack or this skill's patterns. Duplicated logic that already has a home (section 2).
 2. Missing tests for new behavior, skipped tests, stale docs, a malformed commit message, files over their limits.
