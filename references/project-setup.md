@@ -11,7 +11,7 @@ Contents
 ## 1. Create a new project (one command)
 
 1. Ask the user only what you can't decide yourself:
-   - the product name (an English PascalCase identifier, e.g. `FamilyTree`; the Arabic display name goes into `App_Name` in resx later);
+   - the product name (an English PascalCase identifier, e.g. `MyApp`; the Arabic display name goes into `App_Name` in resx later);
    - the publisher name;
    - the target folder;
    - WPF-UI or WinUI 3 (`ui-frameworks.md`; recommend WPF-UI).
@@ -19,7 +19,7 @@ Contents
 3. Run, from any folder:
 
 ```bat
-"<skill folder>\scripts\new-project.bat" FamilyTree "My Company" C:\Projects\FamilyTree --ui wpf
+"<skill folder>\scripts\new-project.bat" MyApp "My Company" C:\Projects\MyApp --ui wpf
 ```
 
 The first run takes a few minutes (package restore and tests). It prints six numbered steps and then `OK` or `FAILED: <reason>`. Report the result to the user in one or two lines.

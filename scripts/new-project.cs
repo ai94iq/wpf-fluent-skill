@@ -25,7 +25,7 @@ try
     string[] layers = [Path.Combine(templateRoot, "common"), Path.Combine(templateRoot, ui)];
 
     if (!Regex.IsMatch(product, "^[A-Z][A-Za-z0-9]{1,40}$"))
-        return Fail("Product must be PascalCase letters and digits, e.g. FamilyTree.");
+        return Fail("Product must be PascalCase letters and digits, e.g. MyApp.");
     if (!Regex.IsMatch(company, @"^[\p{L}\p{N} .\-]{1,60}$"))
         return Fail("Company may contain letters, digits, spaces, dots and hyphens only.");
     if (!layers.All(Directory.Exists)) return Fail($"Template not found under {templateRoot}");

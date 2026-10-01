@@ -1,6 +1,6 @@
 #:property PublishAot=false
 // Adds outline icons (Fluent UI System Icons, 24px Regular, MIT) to a project and regenerates Icons.g.cs.
-// Run through add-icons.bat. Args: <ProjectRoot> [icon_name ...]   e.g. add-icons.bat C:\Projects\FamilyTree person_add filter
+// Run through add-icons.bat. Args: <ProjectRoot> [icon_name ...]   e.g. add-icons.bat C:\Projects\MyApp person_add filter
 // Names are snake_case as on https://github.com/microsoft/fluentui-system-icons (folder "Person Add" -> person_add).
 using System.Text;
 using System.Text.RegularExpressions;
