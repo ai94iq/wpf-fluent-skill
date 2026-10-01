@@ -15,8 +15,8 @@ complete project and `scripts/add-icons.bat` regenerates `Icons.g.cs`.
 
 ## Repository state
 
-- `SKILL.md` frontmatter was renamed `wpf-fluent-rtl` -> `win-desktop-fluent`
-  (uncommitted at handover time; the folder name is unchanged).
+- `SKILL.md` frontmatter is renamed to `win-desktop-fluent`; the folder name
+  is unchanged, so the skill id stays `wpf-fluent-rtl`.
 - Three template fixes are committed on `main`:
   - `5254310` repo: fix: cap xunit.v3 at 3.x for the VSTest runner
   - `c617f35` repo: fix: add System.IO to the WPF test project usings
@@ -78,8 +78,8 @@ Open follow-ups (owner decisions):
    MTP projects in one solution.
 2. `docs/architecture.md` describes Core as holding "layout logic"; it holds
    domain, text, caching and theming logic. Reword to "domain logic".
-3. The `SKILL.md` rename is uncommitted; decide whether to commit it and
-   whether the folder should be renamed to match the frontmatter.
+3. The folder is still `wpf-fluent-rtl` while the frontmatter name is
+   `win-desktop-fluent`; decide whether to rename the folder to match.
 
 ## How to re-verify
 
