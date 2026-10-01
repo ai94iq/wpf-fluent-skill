@@ -12,12 +12,12 @@ Read this when adding strings, dates, numbers or any right-to-left UI. The rules
 
 ## Culture
 
-- `ar-SA` by default in the template, English as a setting. Changing the language restarts the app.
-- `Culture.Configure` forces the Gregorian calendar (ar-SA defaults to Umm al-Qura).
+- The `Language` setting is empty by default: the app follows the system locale for dates, numbers, calendar and direction. Setting it to a specific culture (e.g. `ar-SA`, `en-US`) overrides the system; changing it restarts the app.
+- The system's calendar is respected as-is (Saudi Arabia defaults to Umm al-Qura, most locales to Gregorian). Never force or convert calendars in app code.
 
 ## Dates and digits
 
-- Dates only through `IDateFormatter`: Gregorian or Hijri, date precision, and the Umm al-Qura range fallback. Never format dates in XAML.
+- Dates only through `IDateFormatter`, which uses the current culture's standard patterns and so follows the system locale automatically. Never format dates in XAML.
 - Digits: Western by default. Arabic-Indic is a WPF-only setting, done by number substitution.
 
 ## Direction (RTL)

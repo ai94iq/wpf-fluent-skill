@@ -274,16 +274,13 @@ Show a counter (`Tr.Format("Common_CharCount", n, max)`) only when the limit is 
 **Check box vs toggle switch:**
 - `CheckBox` for a choice that's confirmed by Save, or for agreeing to something.
 - `ui:ToggleSwitch` for a setting that applies immediately.
-- Phrase labels positively ("إظهار التاريخ الهجري", not "عدم إخفاء…"). The box sits on the reading-start side automatically in RTL.
+- Phrase labels positively ("إظهار التفاصيل", not "عدم إخفاء…"). The box sits on the reading-start side automatically in RTL.
 
 **Date picker:** `DatePicker` in WPF, `CalendarDatePicker` in WinUI. Bind to `DateTime?` and convert to `DateOnly` in the ViewModel.
 
-- Its calendar is Gregorian and follows the app culture.
+- Its calendar follows the app culture, which follows the system locale by default.
 - Show the chosen date elsewhere through `IDateFormatter`.
-- Partial or Hijri dates: use a small composite input.
-  1. A precision `ComboBox` (unknown, year, month, day, approximate).
-  2. A year `NumberBox`, plus month and day `ComboBox`es shown according to the precision. Hijri month names come from `HijriMonth_1..12`.
-  3. The ViewModel converts with `UmAlQuraCalendar` (or `HijriCalendar` outside 1900–2077) and checks the day against `GetDaysInMonth`.
+- Partial dates (unknown month or day): a small composite input — a precision `ComboBox` (unknown, year, month, day), a year `NumberBox`, and month/day `ComboBox`es shown according to the precision. Store the precision alongside the date.
 
 **Search:** `ui:AutoSuggestBox` or a text box with a leading `AppIcon Kind="Search"`. Search runs as the user types (300 ms debounce, Arabic-normalized), and Esc clears it.
 

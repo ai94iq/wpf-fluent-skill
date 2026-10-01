@@ -28,7 +28,7 @@ New projects get all of this from `new-project.bat`. In an existing project, cop
 | `App.xaml.cs` | Startup order, single instance, exception handlers |
 | `Hosting/ServiceRegistration.cs` | All DI registrations; add new services here |
 | `Hosting/AppPaths.cs`, `AppSettings.cs`, `SettingsStore.cs` | Data folders, settings record, atomic JSON save |
-| `Hosting/Culture.cs`, `WindowExtensions.cs` | Culture, Gregorian calendar, RTL, fonts, digits |
+| `Hosting/Culture.cs`, `WindowExtensions.cs` | Culture (system locale by default), RTL, fonts, digits |
 | `Hosting/AppLogging.cs`, `LazyService.cs` | Serilog setup; `Lazy<T>` injection |
 | `Localization/Tr.cs`, `TrExtension.cs` | `Tr.Get/Format/Plural`; `{l:Tr ...}` |
 | `Services/DialogService.cs`, `DateFormatter.cs`, `ThemeService.cs`, `DataChangeNotifier.cs` | Dialogs, dates, theme/accent, UI-thread change messages |
