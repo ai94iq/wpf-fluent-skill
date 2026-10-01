@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: formatting and size budget
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+      - name: Check skill files
+        run: scripts\check-skill.bat
+
+  scaffold:
+    name: scaffold and test (${{ matrix.ui }})
+    runs-on: windows-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        ui: [wpf, winui]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+      - name: Scaffold and test
+        run: scripts\new-project.bat CiApp "CI" "${{ runner.temp }}\Ci-${{ matrix.ui }}" --ui ${{ matrix.ui }}
+      - name: Check formatting
+        run: dotnet format whitespace "${{ runner.temp }}\Ci-${{ matrix.ui }}\CiApp.slnx" --verify-no-changes --no-restore

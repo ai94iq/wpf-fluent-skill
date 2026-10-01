@@ -1,0 +1,7 @@
+# Keep the skill repository's line endings stable across platforms.
+* text=auto
+pre-commit text eol=lf
+*.bat text eol=crlf
+*.png binary
+*.ico binary
+*.ttf binary
