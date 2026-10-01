@@ -72,6 +72,7 @@ For a project not created by the generator (such as the user's current WPF app):
 |---|---|
 | `new-project.bat Product "Company" TargetFolder [--ui wpf\|winui]` | Builds the whole project from the template: latest package versions, fonts, solution, git with the hook, tests, first commit |
 | `add-icons.bat ProjectRoot name ...` | Adds Fluent outline icons by snake_case name (`person_add`) and regenerates `Icons.g.cs` |
+| `check-skill.bat` | Checks the skill repository itself: line-count budgets and text formatting; run by CI on every push |
 
 **Repo scripts** live in the project root:
 

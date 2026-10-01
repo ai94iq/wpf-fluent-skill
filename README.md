@@ -48,7 +48,7 @@ Use `--ui winui` for the WinUI 3 variant. The first run takes a few minutes
 |---|---|
 | `SKILL.md` | Identity, agent rules, locked stack, review checklist |
 | `references/` | Project setup, code patterns, localization/RTL, UI/UX, UI frameworks, installer |
-| `scripts/` | `new-project.bat` (full scaffold), `add-icons.bat` (Fluent outline icons) |
+| `scripts/` | `new-project.bat` (full scaffold), `add-icons.bat` (icons), `check-skill.bat` (size and formatting checks) |
 | `assets/template/` | Template files: `common/` plus the `wpf/` or `winui/` layer |
 
 ## Status
