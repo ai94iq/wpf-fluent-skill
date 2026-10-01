@@ -38,10 +38,10 @@ This skill is prescriptive. Every choice in it is final for projects that use it
 Input:
 - Find before you read. Search with `grep`/`rg` for the symbol or key, then view only the line range you need.
 - Never re-read a file you already have unless it changed.
-- Never open `bin/`, `obj/`, `artifacts/`, `Icons.g.cs`, fonts or whole `.resx` files. Search resx for the keys you need.
+- Never open `bin/`, `obj/`, `Icons.g.cs`, fonts or whole `.resx` files. Search resx for the keys you need.
+- Build output: never read whole logs. `test.bat`, `build.bat` and `package.bat` already capture their full output to `artifacts\logs\<script>.log` and print only errors; see the "Build output is never read in full" rule below the locked stack.
 - Load one reference at a time, only when the task needs it.
 - Generate, don't write: use `new-project.bat` for a new project and `add-icons.bat` for icons, never hand-written boilerplate or SVG paths.
-- Scripts already print errors only (`-v q`). If an output is still long, filter it to the error lines.
 
 Output:
 - Edit with small targeted replacements. Never rewrite a whole file to change a few lines.
@@ -78,7 +78,14 @@ Reasons for the non-obvious choices:
 - **Fluent outline icons:** the same design language as Windows 11, they work on Windows 10, and they're MIT-licensed.
 - **No UI automation:** behavior is tested through ViewModels, which is faster and more reliable.
 
-UI languages: **Arabic (ar-SA) is primary and neutral; English is secondary.**
+UI languages: **the app chooses one neutral resx language plus satellites. The template ships Arabic (ar-SA) neutral and English satellite; change the pair at scaffold if the product needs a different one.**
+
+## Build output is never read in full
+
+Every repo script writes its full output into `artifacts\logs\<script>.log` and prints one line — `OK`, or `FAILED` plus the error lines from `logs.bat`. Agents must not `type` or re-run these scripts to see the whole log:
+- After a failure, read `logs.bat <script> error` output (already shown) or open only the matching `artifacts\logs\<script>.log` range with `grep`/`rg` first.
+- Never paste a full build or test log into the chat, even on failure.
+- `dotnet test`, `dotnet publish` and the WiX build are never run directly by an agent: always through `test.bat`, `build.bat` and `package.bat`, so the log capture stays in one place.
 
 ## 1. Solution layout
 
@@ -89,7 +96,7 @@ MyApp/
 ├── MyApp.slnx, global.json, Directory.Build.props, Directory.Packages.props
 ├── .editorconfig, .gitignore, .gitattributes, .githooks/pre-commit
 ├── README.md, CHANGELOG.md
-├── run.bat  build.bat  test.bat  package.bat  clean.bat
+├── run.bat  build.bat  test.bat  package.bat  logs.bat  clean.bat
 ├── docs/            architecture, database, localization, release, known-issues, decisions/ (ADRs)
 ├── src/
 │   ├── MyApp.App/   UI (WPF + WPF-UI, or WinUI 3)
@@ -232,8 +239,9 @@ scrolling stays fast. Adds index IX_Person_NameSearch_Id in 0004.
 |---|---|
 | `run.bat` | Run the app in Debug (for the user, not agents) |
 | `build.bat` | Publish the Release, self-contained, ReadyToRun exe to `artifacts\publish\win-x64` |
-| `test.bat` | Run all tests |
+| `test.bat` | Run all tests (output to `artifacts\logs\test.log`) |
 | `package.bat` | Tests, build, then the MSI to `artifacts\installer` |
+| `logs.bat` | Show error (or all) lines from a script's saved log: `logs.bat test error` |
 | `clean.bat` | Delete every `bin`, `obj` and `artifacts` folder |
 
 Repo scripts are ASCII-only with CRLF line endings, and start with `cd /d "%~dp0"`. They print errors only, return nonzero on failure, and pause unless given `--no-pause`.
