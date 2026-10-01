@@ -53,5 +53,5 @@ Use `--ui winui` for the WinUI 3 variant. The first run takes a few minutes
 
 ## Status
 
-Scaffold, tests and Release build are validated on .NET SDK 10.0.401 for both
-UI variants.
+CI runs on every push: the skill checks (line budgets, formatting), then for
+both UI variants a full pipeline — scaffold, tests, Release build and MSI.
