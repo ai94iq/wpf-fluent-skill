@@ -7,7 +7,7 @@ description: Prescriptive rules and scaffolding scripts for native Windows 10/11
 
 This skill is prescriptive. Every choice in it is final for projects that use it. Goals, in priority order: the UI thread never blocks, nothing loads before it's needed, text, dates and numbers are correct in every language the app ships (Arabic/RTL included), the UI looks clean and modern, and the app behaves the same on Windows 10 and 11.
 
-This file holds the identity, the agent rules and the locked stack. The how-to lives in `references/` — read only what the task needs.
+This file holds the identity, the agent rules and the locked stack. The how-to lives in `references/` — read only what the task needs. Humans can do the same tasks without an agent from the keyboard menu: `scripts\tui.bat` on Windows, `scripts/tui.sh` on macOS/Linux/Git Bash.
 
 ## Agent rules (read first)
 

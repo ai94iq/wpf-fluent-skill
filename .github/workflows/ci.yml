@@ -16,6 +16,8 @@ jobs:
           dotnet-version: '10.x'
       - name: Check skill files
         run: scripts\check-skill.bat
+      - name: Keyboard menu (non-interactive fallback)
+        run: scripts\tui.bat
 
   scaffold:
     name: scaffold and test (${{ matrix.ui }})

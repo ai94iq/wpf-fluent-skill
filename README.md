@@ -42,13 +42,32 @@ scripts\new-project.bat MyApp "My Company" C:\Projects\MyApp --ui wpf
 Use `--ui winui` for the WinUI 3 variant. The first run takes a few minutes
 (package restore, fonts and tests).
 
+## Use without an agent
+
+The same tasks are available from a keyboard menu. In a terminal, from the
+repository root:
+
+```bat
+scripts\tui.bat
+```
+
+```bash
+./scripts/tui.sh
+```
+
+Create a project, add Fluent icons, run a project's build/test/run/package/
+logs/clean scripts, and page through the reference guides. Esc goes back,
+Q or Ctrl+C closes it. It remembers the company name and the last project
+between runs. Without an interactive terminal the entry scripts print the
+plain commands instead of failing.
+
 ## Layout
 
 | Path | Contents |
 |---|---|
 | `SKILL.md` | Identity, agent rules, locked stack, review checklist |
 | `references/` | Project setup, code patterns, localization/RTL, UI/UX, UI frameworks, installer |
-| `scripts/` | `new-project.bat` (full scaffold), `add-icons.bat` (icons), `check-skill.bat` (size and formatting checks) |
+| `scripts/` | `new-project.bat` (full scaffold), `add-icons.bat` (icons), `check-skill.bat` (size and formatting checks), `tui.bat` / `tui.sh` (keyboard menu) |
 | `assets/template/` | Template files: `common/` plus the `wpf/` or `winui/` layer |
 
 ## Status

@@ -2,6 +2,7 @@
 * text=auto
 pre-commit text eol=lf
 *.bat text eol=crlf
+*.sh text eol=lf
 *.png binary
 *.ico binary
 *.ttf binary
