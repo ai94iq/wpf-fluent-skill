@@ -1,19 +1,19 @@
 ---
 name: wpf-fluent-rtl
-description: Prescriptive rules and scaffolding scripts for native Windows 10/11 desktop apps in C# with WPF + WPF-UI (default) or WinUI 3, CommunityToolkit.Mvvm, Generic Host, Serilog, SQLite with Dapper, IMemoryCache, resx localization and a WiX MSI, with Arabic/RTL support, modern outline-icon styling, light/dark/accent theming, test-first automation and DRY/KISS. Covers project scaffolding, git commit format, bat scripts, forms and inputs, loading states, lazy loading, caching and token-efficient agent behavior. Use whenever the user creates, scaffolds, writes, reviews, styles, tests, builds, packages, commits or debugs a Windows desktop app, XAML, ViewModels, forms, SQLite, localization or installers, or mentions WPF, WinUI, Arabic, RTL, Hijri, WiX, MSI, icons, themes, dark mode. Agents using this skill reply to the user in Arabic.
+description: Prescriptive rules and scaffolding scripts for native Windows 10/11 desktop apps in C# with WPF + WPF-UI (default) or WinUI 3, CommunityToolkit.Mvvm, Generic Host, Serilog, SQLite with Dapper, IMemoryCache, resx localization and a WiX MSI, with modern outline-icon styling, light/dark/accent theming, test-first automation and DRY/KISS. Any UI language works; Arabic and other right-to-left languages get first-class support (RTL flow, Arabic plurals, Hijri dates, Arabic text search). Covers project scaffolding, git commit format, bat scripts, forms and inputs, loading states, lazy loading, caching and token-efficient agent behavior. Use whenever the user creates, scaffolds, writes, reviews, styles, tests, builds, packages, commits or debugs a Windows desktop app, XAML, ViewModels, forms, SQLite, localization or installers, or mentions WPF, WinUI, Arabic, RTL, Hijri, WiX, MSI, icons, themes, dark mode. Agents using this skill reply in the language the user writes in.
 ---
 
-# Windows desktop apps — Arabic/RTL, Windows 10 & 11
+# Windows desktop apps — Windows 10 & 11
 
-This skill is prescriptive. Every choice in it is final for projects that use it. Goals, in priority order: the UI thread never blocks, nothing loads before it's needed, Arabic is correct everywhere, the UI looks clean and modern, and the app behaves the same on Windows 10 and 11.
+This skill is prescriptive. Every choice in it is final for projects that use it. Goals, in priority order: the UI thread never blocks, nothing loads before it's needed, text, dates and numbers are correct in every language the app ships (Arabic/RTL included), the UI looks clean and modern, and the app behaves the same on Windows 10 and 11.
 
 ## Agent rules (read first)
 
 1. **The user is not very technical.** Use plain words. When a technical term can't be avoided, add a few plain words explaining it the first time. Never ask the user to choose between technical options this skill already decides: decide, then say what you did. Ask only about the product (what it should do, wording, names, which preset color). When the user must do something, give exact steps ("double-click `run.bat`").
-2. **Reply in Arabic** (Modern Standard Arabic). Keep in English any term whose Arabic translation would sound odd or be inaccurate, and wrap it in backticks so it doesn't scramble the sentence direction: `build`, `commit`, `ViewModel`, `XAML`, `binding`, `cache`, `migration`, `repository`, `installer`, `MSI`, `script`, `resx`, `NuGet`, `debug`. Use Arabic for everyday words: ملف، مجلد، نافذة، صفحة، زر، إعدادات، قاعدة البيانات، اختبار، خطأ. Code, comments, commit messages and project docs stay in English.
+2. **Reply in the language the user writes in.** If that language is Arabic, use Modern Standard Arabic and keep in English any term whose Arabic translation would sound odd or be inaccurate, wrapped in backticks so it doesn't scramble the sentence direction: `build`, `commit`, `ViewModel`, `XAML`, `binding`, `cache`, `migration`, `repository`, `installer`, `MSI`, `script`, `resx`, `NuGet`, `debug`. Use Arabic for everyday words: ملف، مجلد، نافذة، صفحة، زر، إعدادات، قاعدة البيانات، اختبار، خطأ. Code, comments, commit messages and project docs stay in English.
 3. **Keep replies short.** By default, 5 lines or fewer:
    - what changed, in terms the user sees;
-   - the result ("الاختبارات نجحت");
+   - the result ("الاختبارات نجحت" when replying in Arabic);
    - the next step, or one question.
 
    Don't paste code, file lists or plans into the chat, and don't restate the request. Go longer only when the user asks ("اشرح أكثر").
@@ -61,7 +61,7 @@ Output:
 | Caching | `IMemoryCache` + `GetOrLoadAsync` | HybridCache, Redis, ad-hoc static dictionaries (identity maps excepted) |
 | Logging | Serilog: File + Async sinks | NLog, log4net, `Console`/`Debug.WriteLine` |
 | JSON | `System.Text.Json` | Newtonsoft.Json |
-| Localization | `.resx` + `Tr`; Arabic neutral, English satellite | Hard-coded UI text, generated `Designer.cs`, `.resw`/`x:Uid`, JSON localization |
+| Localization | `.resx` + `Tr`; a neutral language plus satellite assemblies (template ships Arabic neutral, English satellite) | Hard-coded UI text, generated `Designer.cs`, `.resw`/`x:Uid`, JSON localization |
 | Icons | Fluent UI System Icons, 24px Regular (outline), via `add-icons.bat` and `AppIcon` | Icon fonts (Segoe Fluent Icons is Windows 11-only), emoji, PNG icons, other icon packs |
 | Fonts | Noto Sans Arabic with Segoe UI fallback for Arabic UIs; otherwise the system UI font | Any other bundled font |
 | Tests | xUnit v3 + NSubstitute; pre-commit hook | MSTest, NUnit, Moq, FluentAssertions, UI automation (FlaUI, WinAppDriver, Appium) |
@@ -317,7 +317,9 @@ Caching layers, cheapest first:
 
 Keys are `"{area}:{id}"`, plus `":{culture}"` for localized values. Cache immutable records only. After a commit, the repository evicts its keys and calls `IDataChangeNotifier.Notify(...)`.
 
-## 13. Arabic, RTL and localization
+## 13. Localization, Arabic and RTL
+
+Localization rules apply to every app: no user-visible string outside resx, dates and numbers only through services. The Arabic and RTL rules below apply whenever the app ships a right-to-left UI — the template supports it out of the box, it isn't required.
 
 - **Culture:** `ar-SA` by default, English as a setting. Changing the language restarts the app. `Culture.Configure` forces the Gregorian calendar (ar-SA defaults to Umm al-Qura).
 - **Dates:** only through `IDateFormatter`, which handles Gregorian or Hijri, date precision, and the Umm al-Qura range fallback. Never format dates in XAML.
