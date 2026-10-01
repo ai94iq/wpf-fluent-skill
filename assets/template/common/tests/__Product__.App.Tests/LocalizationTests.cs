@@ -27,14 +27,14 @@ public sealed class LocalizationTests
     private static IEnumerable<string> UsedKeys()
     {
         foreach (var file in TestPaths.SourceFiles(".xaml", ".cs"))
-        foreach (Match match in KeyUsage.Matches(File.ReadAllText(file)))
-        {
-            var key = match.Groups["k"].Value;
-            if (match.Groups["m"].Value == "Plural")
-                foreach (var form in PluralForms) yield return $"{key}_{form}";
-            else
-                yield return key;
-        }
+            foreach (Match match in KeyUsage.Matches(File.ReadAllText(file)))
+            {
+                var key = match.Groups["k"].Value;
+                if (match.Groups["m"].Value == "Plural")
+                    foreach (var form in PluralForms) yield return $"{key}_{form}";
+                else
+                    yield return key;
+            }
     }
 
     private static HashSet<string> Keys(string fileName) =>
