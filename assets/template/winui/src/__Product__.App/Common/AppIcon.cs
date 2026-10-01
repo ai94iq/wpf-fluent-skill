@@ -2,8 +2,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Shapes;
 using __Product__.App.Resources;
+using Path = Microsoft.UI.Xaml.Shapes.Path;
+using Shape = Microsoft.UI.Xaml.Shapes.Shape;
 
 namespace __Product__.App.Common;
 
