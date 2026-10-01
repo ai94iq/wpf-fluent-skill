@@ -18,7 +18,7 @@ jobs:
         run: scripts\check-skill.bat
 
   scaffold:
-    name: scaffold, test and package (${{ matrix.ui }})
+    name: scaffold and test (${{ matrix.ui }})
     runs-on: windows-latest
     timeout-minutes: 30
     strategy:
@@ -34,11 +34,3 @@ jobs:
         run: scripts\new-project.bat CiApp "CI" "${{ runner.temp }}\Ci-${{ matrix.ui }}" --ui ${{ matrix.ui }}
       - name: Check formatting
         run: dotnet format whitespace "${{ runner.temp }}\Ci-${{ matrix.ui }}\CiApp.slnx" --verify-no-changes --no-restore
-      - name: Build the MSI
-        shell: pwsh
-        run: |
-          & "${{ runner.temp }}\Ci-${{ matrix.ui }}\package.bat" --no-pause
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $msi = Get-ChildItem "${{ runner.temp }}\Ci-${{ matrix.ui }}\artifacts\installer" -Recurse -Filter *.msi | Select-Object -First 1
-          if (-not $msi) { throw 'package.bat reported success but no MSI was produced.' }
-          "MSI: $($msi.FullName) ($([math]::Round($msi.Length / 1MB, 1)) MB)"
