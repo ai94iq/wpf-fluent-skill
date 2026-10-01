@@ -16,7 +16,8 @@
     <PackageVersion Include="Microsoft.Data.Sqlite" Version="__V:Microsoft.Data.Sqlite@10__" />
     <PackageVersion Include="Dapper" Version="__V:Dapper@2__" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="__V:Microsoft.NET.Test.Sdk__" />
-    <PackageVersion Include="xunit.v3" Version="__V:xunit.v3__" />
+    <!-- xunit.v3 4.x drops VSTest; keep 3.x while the runner below is 3.x -->
+    <PackageVersion Include="xunit.v3" Version="__V:xunit.v3@3__" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="__V:xunit.runner.visualstudio@3__" />
     <PackageVersion Include="NSubstitute" Version="__V:NSubstitute@5__" />
   </ItemGroup>
