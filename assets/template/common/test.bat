@@ -3,7 +3,11 @@ setlocal EnableExtensions
 cd /d "%~dp0"
 set "RESULT=0"
 
-dotnet test "__Product__.slnx" -c Release -v q --nologo
+rem Full output goes to artifacts\logs\test.log; the screen gets one line, or the
+rem error lines plus the log path on failure. Humans (no --no-pause) get the full log.
+if not exist "artifacts\logs" mkdir "artifacts\logs"
+
+dotnet test "__Product__.slnx" -c Release -v q --nologo > "artifacts\logs\test.log" 2>&1
 if errorlevel 1 goto :fail
 
 echo [test] OK
@@ -11,8 +15,10 @@ goto :end
 
 :fail
 set "RESULT=1"
-echo [test] FAILED
+echo [test] FAILED - error lines below, full output in artifacts\logs\test.log
+call logs.bat test error --no-pause
 
 :end
+if /i not "%~1"=="--no-pause" type "artifacts\logs\test.log"
 if /i not "%~1"=="--no-pause" pause
 exit /b %RESULT%
