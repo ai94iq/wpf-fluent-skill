@@ -5,9 +5,8 @@ namespace __Product__.App.Hosting;
 // Saved as settings.json. Changing Language or digits takes effect after a restart.
 public sealed record AppSettings
 {
-    public string Language { get; init; } = "ar-SA";          // "ar-SA" or "en-US"
-
-    public bool UseHijri { get; init; }
+    // Empty = follow the system locale. Otherwise a specific culture, e.g. "ar-SA" or "en-US".
+    public string Language { get; init; } = "";
 
     public bool ArabicIndicDigits { get; init; }
 

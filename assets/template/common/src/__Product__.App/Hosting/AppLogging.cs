@@ -13,7 +13,7 @@ public static class AppLogging
                 Path.Combine(AppPaths.Logs, "app-.log"),
                 rollingInterval: RollingInterval.Day,
                 retainedFileCountLimit: 14,
-                formatProvider: CultureInfo.InvariantCulture));   // never Hijri or Arabic digits in logs
+                formatProvider: CultureInfo.InvariantCulture));   // logs stay culture-invariant
 #if DEBUG
         config.MinimumLevel.Debug();
 #else
