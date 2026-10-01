@@ -11,15 +11,7 @@ Plurals: `Base_zero`, `Base_one`, `Base_two`, `Base_few`, `Base_many`, `Base_oth
 
 | English | Arabic | Notes |
 |---|---|---|
-| Family tree | شجرة العائلة | |
 | Person | شخص | |
-| Spouse | الزوج / الزوجة | Use the gendered form when known |
-| Marriage | زواج | |
-| Children | الأبناء | |
-| Ancestors | الأسلاف | |
-| Descendants | الذرية | |
-| Generation | جيل | |
-| Deceased | متوفى / متوفاة | |
 | Save | حفظ | |
 | Cancel | إلغاء | |
 | Retry | إعادة المحاولة | |
