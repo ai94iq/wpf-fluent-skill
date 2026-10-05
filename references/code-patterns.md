@@ -195,7 +195,7 @@ WinUI view: the same structure with `x:Bind`, for example `State="{x:Bind ViewMo
 Call `await ViewModel.EnsureLoadedAsync()` from the page's navigated-to hook (WPF-UI: check the navigation-aware interface's member names in the installed 4.x version; WinUI: `OnNavigatedTo`).
 
 MVVM rules:
-- Every page ViewModel derives from `PageViewModel` and implements `LoadCoreAsync(ct)`, returning `false` when there's nothing to show. `EnsureLoadedAsync()` loads once; `ReloadOnChange("area")` reloads when other screens change the data.
+- Every page ViewModel derives from `PageViewModel` and implements `LoadCoreAsync(ct)`, returning `false` when there's nothing to show. `EnsureLoadedAsync()` loads once; `ReloadOnChange("area")` reloads when other screens change the data. `ReloadQuietlyOnChange("area")` refreshes data already on screen without the loading state; a failure after the first load keeps the content and only logs.
 - The page XAML shows content only in states `Idle`, `Loading` and `Loaded`, with `LoadStateOverlay` on top (spinner, empty text, error with Retry).
 - `[ObservableProperty]` goes on partial properties, never fields. Set defaults in the constructor.
 - ViewModels never reference UI types (`MessageBox`, `Brush`, `Visibility`, `Dispatcher`, `Window`). Use services.
