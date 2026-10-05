@@ -7,8 +7,9 @@
     <DefineConstants>Version=$(Version);PublishDir=$(PublishDir)</DefineConstants>
     <!-- WiX packages are versioned here, not through CPM; keep both on the same 6.x version -->
     <ManagePackageVersionsCentrally>false</ManagePackageVersionsCentrally>
-    <!-- WinAppSDK ships localized .mui files whose language IDs ICE03 rejects; suppress it for those packages only -->
-    <SuppressIces Condition="Exists('$(PublishDir)\Microsoft.ui.xaml.dll')">ICE03</SuppressIces>
+    <!-- WinAppSDK ships localized .mui files that ICE03 rejects, and Files-based payloads without
+         language resources trip ICE60; suppress both for that layout only -->
+    <SuppressIces Condition="Exists('$(PublishDir)\Microsoft.ui.xaml.dll')">ICE03;ICE60</SuppressIces>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="WixToolset.UI.wixext" Version="__V:WixToolset.UI.wixext@6__" />

@@ -9,6 +9,7 @@ Contents
 6. Signing
 7. Install testing
 8. Rules
+9. Publishing to winget
 
 ## 1. Fixed decisions
 
@@ -19,8 +20,8 @@ Contents
 | Payload | The self-contained `build.bat` output in `artifacts\publish\win-x64`. No prerequisites, no bootstrapper bundle |
 | UI | `WixUI_InstallDir` (welcome, license, folder, install) |
 | Language | `ar-SA` installer (codepage 1256) |
-| Shortcut | One Start Menu shortcut. No desktop shortcut |
-| Upgrades | `MajorUpgrade` with a fixed `UpgradeCode` |
+| Shortcut | One Start Menu shortcut, advertised from the exe's component. No desktop shortcut |
+| Upgrades | `MajorUpgrade` with a fixed `UpgradeCode` and `AllowSameVersionUpgrades` |
 | User data | Never touched: `%LOCALAPPDATA%\MyApp` survives uninstall |
 
 Licensing: WiX v6 adopted the Open Source Maintenance Fee for organizations that earn revenue from it. Confirm the current terms on wixtoolset.org before a commercial release and tell the user if they apply.
@@ -32,7 +33,7 @@ The generator creates these from the template. Edit them in place; never rewrite
 | File | Contains |
 |---|---|
 | `installer/MyApp.Installer.wixproj` | WiX SDK and UI extension pinned to the same 6.x version, `ar-SA` culture, x64, version from `Directory.Build.props` |
-| `installer/Package.wxs` | Per-machine package, the fixed `UpgradeCode` (generated once, never changed), `MajorUpgrade`, all publish files via `<Files>`, Start Menu shortcut, `WixUI_InstallDir` |
+| `installer/Package.wxs` | Per-machine package, the fixed `UpgradeCode` (generated once, never changed), `MajorUpgrade`, all publish files via `<Files>`, an advertised Start Menu shortcut in the exe's component, `WixUI_InstallDir` |
 | `installer/Package.ar-SA.wxl` | Our strings with codepage 1256 (MSI databases aren't Unicode) |
 | `installer/License.rtf` | License text. Edit in WordPad or Word, never by hand |
 
@@ -51,6 +52,7 @@ If the build reports missing ar-SA WixUI strings, add them to `Package.ar-SA.wxl
 - `Version` in `Directory.Build.props` is `MAJOR.MINOR.PATCH`, and nothing else sets a version.
 - Windows Installer compares only the first three fields, with limits of 255, 255 and 65,535. Every MSI handed to anyone must have a higher version than the last one, or `MajorUpgrade` won't replace it.
 - `UpgradeCode` never changes. The product code is generated per build automatically; don't set it.
+- `AllowSameVersionUpgrades` lets a test build install over the same version; the ICE61 warning it triggers is expected. Upgrades from older versions are unaffected.
 - Removing or renaming files is safe under `MajorUpgrade`, because the old version is removed first.
 
 ## 6. Signing
@@ -69,7 +71,18 @@ Before each release, on a Windows 10 22H2 VM and on Windows 11, as a standard us
 
 ## 8. Rules
 
-- No custom actions, services, drivers, firewall rules or registry writes beyond the shortcut key path, unless the user approves (agent rule 2).
+- No custom actions, services, drivers, firewall rules or extra registry writes, unless the user approves (agent rule 4).
 - Never delete or modify user data (`%LOCALAPPDATA%\MyApp`) during install, upgrade or uninstall.
 - No desktop shortcut, no auto-start entry, no "launch after install" checkbox unless the user asks.
 - Keep `Package.wxs` under 150 lines. If it grows, move fragments into separate `.wxs` files in `installer/`.
+
+## 9. Publishing to winget
+
+winget is how most users install a desktop app. Keep the manifests in `packaging/winget/` (schema 1.6) and let CI submit them from the MSI it built:
+
+- On a version tag, the release pipeline builds the MSI, publishes the GitHub release, then rewrites `PackageVersion`, `InstallerUrl`, `InstallerSha256`, `ProductCode` and the release-notes URL in the three manifest files.
+- The SHA256 and the product code must come from the CI-built MSI, never from a local `package.bat` output: MSIs are not byte-reproducible, so the hash and product code differ per build.
+- Submission runs `wingetcreate submit` with a classic GitHub token that has the `public_repo` scope, stored as the repository secret `WINGET_TOKEN`. Without the secret, skip the submission and leave the refreshed manifests for a manual run.
+- **Never reference `secrets.*` in a step `if:`** — the workflow becomes invalid and fails at startup with zero jobs. Put the secret in a job-level `env` and test `env.TOKEN != ''` in the step instead.
+- Manual fallback: download the MSI attached to the release, compute its SHA256, read its product code, update the three files, then run `wingetcreate submit --prtitle "New version: Publisher.MyApp version X.Y.Z" --token <token> packaging\winget`.
+- winget's validation runs on the pull request; once it is merged, `winget install Publisher.MyApp` works.
