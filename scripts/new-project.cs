@@ -32,8 +32,8 @@ try
     if (Directory.Exists(targetDir) && Directory.EnumerateFileSystemEntries(targetDir).Any())
         return Fail($"Target folder is not empty: {targetDir}");
 
-    var sdk = Run(Environment.CurrentDirectory, capture: true, "dotnet", "--version").Trim();
-    if (!sdk.StartsWith("10.", StringComparison.Ordinal)) return Fail($".NET 10 SDK required, found '{sdk}'.");
+    var sdk = ResolveDotNet10Sdk();
+    if (sdk is null) return Fail("The .NET 10 SDK is required. Install it from https://dotnet.microsoft.com/download/dotnet/10.0 and run this again.");
 
     Step(1, "Resolving latest stable package versions");
     using var http = new HttpClient { Timeout = TimeSpan.FromSeconds(30) };
@@ -124,6 +124,30 @@ static bool HasGitIdentity(string workDir)
     catch (InvalidOperationException)
     {
         return false;                                   // git config exits 1 when the key is unset
+    }
+}
+
+static string? ResolveDotNet10Sdk()
+{
+    // Ask for every installed SDK instead of `dotnet --version`: the generated project must pin
+    // .NET 10 no matter which global.json or preview SDK the calling folder resolves to.
+    try
+    {
+        var lines = Run(Path.GetTempPath(), capture: true, "dotnet", "--list-sdks")
+            .Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        Version? best = null;
+        string? pick = null;
+        foreach (var line in lines)
+        {
+            var text = line.Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+            if (text is null || !Version.TryParse(text, out var version) || version.Major != 10) continue;
+            if (best is null || version > best) { best = version; pick = text; }
+        }
+        return pick;
+    }
+    catch (InvalidOperationException)
+    {
+        return null;                                    // dotnet is not installed or not on PATH
     }
 }
 
