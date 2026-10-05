@@ -6,6 +6,7 @@ Contents
 3. Comparison
 4. What changes in code with WinUI 3
 5. Control equivalents
+6. Tray icon (optional)
 
 ## 1. Decision rule
 
@@ -79,3 +80,15 @@ Everything in Core, Data, the tests, the docs, scripts and installer is identica
 | Navigation | `ui:NavigationView` (per the WPF-UI 4.x sample) | `NavigationView` |
 
 For WPF-UI, check member names against the installed 4.x version (search its package XAML) before using a property for the first time. Never guess from 3.x examples.
+
+## 6. Tray icon (optional)
+
+Neither stack has a tray icon built in. Add one only when the product asks, and record it as an ADR first (agent rule 4).
+
+- **Library:** `H.NotifyIcon` 2.x — `H.NotifyIcon.Wpf` for WPF, `H.NotifyIcon.WinUI` for WinUI. Nothing else in the stack provides a tray icon.
+- **Icons:** ship four `.ico` files under `Assets/` — filled and outline, each in a light and a dark variant (`tray-light.ico`, `tray-dark.ico`, `tray-outline-light.ico`, `tray-outline-dark.ico`). The notification area follows the **taskbar** theme, which can differ from the app theme, so pick the file from `HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize` → `SystemUsesLightTheme` (not `AppsUseLightTheme`), never from `RequestedTheme`.
+- **The taskbar theme can change while the app runs.** `ElementTheme.Default` follows Windows by itself, but the tray icon and any custom frame color do not. Watch for the change and reapply:
+  - `WM_SETTINGCHANGE` with `lParam == "ImmersiveColorSet"` — Windows broadcasts it to top-level windows only, so a message-only window never sees it;
+  - or a registry notification (`RegNotifyChangeKeyValue`) on the Personalize key, which fires immediately instead of waiting in the window message queue.
+  Reapply on the UI thread (`DispatcherQueue` / `Dispatcher`), and only when the resolved icon file actually changed.
+- Menu: Show/Hide, Settings, Exit; left-click does the default action. Register the icon in DI as a singleton and dispose it with the host — a collected instance loses the icon silently.
