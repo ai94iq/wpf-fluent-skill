@@ -66,7 +66,7 @@ plain commands instead of failing.
 | Path | Contents |
 |---|---|
 | `SKILL.md` | Identity, agent rules, locked stack, review checklist |
-| `references/` | Project setup, code patterns, localization/RTL, UI/UX, UI frameworks, installer |
+| `references/` | Project setup, code patterns, localization/RTL, UI/UX, UI frameworks, optional features, installer |
 | `scripts/` | `new-project.bat` (full scaffold), `add-icons.bat` (icons), `check-skill.bat` (size and formatting checks), `tui.bat` / `tui.sh` (keyboard menu) |
 | `assets/template/` | Template files: `common/` plus the `wpf/` or `winui/` layer |
 

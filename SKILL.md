@@ -87,6 +87,7 @@ Every dotnet-running repo script writes its full output into `artifacts\logs\<sc
 | Strings, dates, digits, Arabic, RTL | `localization.md` |
 | Screens, forms, inputs, styling, icons, themes | `ui-ux.md` |
 | WPF-UI vs WinUI 3, WinUI-specific rules | `ui-frameworks.md` |
+| Update check, first-run welcome, encrypted database | `app-features.md` |
 | Installer and releases | `installer.md` |
 
 ## Review checklist
