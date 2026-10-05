@@ -189,7 +189,7 @@ public sealed class FormField : HeaderedContentControl
 </Style>
 ```
 
-WinUI: use the control's built-in `Header` for the label and a `TextBlock` below it with `Style="{StaticResource FieldErrorStyle}"`, made visible through an `x:Bind` function when the error isn't null.
+WinUI: use the control's built-in `Header` for the label and a `TextBlock` below it with `Style="{StaticResource ErrorTextStyle}"` (defined in `Styles.xaml`), made visible through an `x:Bind` function when the error isn't null.
 
 **Validation lives in the ViewModel.** Errors stay hidden until the first save attempt, then update live. The Save button stays enabled; clicking it shows what's missing, which is clearer than a greyed-out button. Shared rules go in `Common/Validate.cs`, using resx keys such as `Validation_Required`:
 
@@ -357,6 +357,7 @@ public static class PasswordHasher   // Core/Security
   - Errors offer Retry.
 - **Success:** a short `InfoBar` (severity Success) at the top of the content that closes itself after about 4 seconds. Don't show one for trivial saves.
 - **Page-level warnings and errors:** an `InfoBar` that stays until dismissed or fixed.
+- **Inline field and save errors** are red in every theme: the WPF `FormField` error line, or WinUI `TextBlock Style="{StaticResource ErrorTextStyle}"`. Never the default text color.
 - **Confirm by name:** "حذف «أحمد بن علي»؟ لا يمكن التراجع عن ذلك." with buttons [حذف] [إلغاء], defaulting to Cancel.
 - Never use a dialog for something an inline message can say.
 

@@ -10,6 +10,12 @@
     <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
   </Style>
 
+  <!-- Error messages: the critical system brush, red in every theme. -->
+  <Style x:Key="ErrorTextStyle" TargetType="TextBlock">
+    <Setter Property="Foreground" Value="{ThemeResource SystemFillColorCriticalBrush}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+
   <!-- Spacing tokens (4 px grid). Use these instead of literal margins. -->
   <Thickness x:Key="PagePadding">24</Thickness>
   <Thickness x:Key="SectionSpacing">0,0,0,32</Thickness>
