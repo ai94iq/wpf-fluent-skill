@@ -63,7 +63,7 @@ try
     if (build)
     {
         Step(5, "Building and testing (first restore takes a minute)");
-        Run(targetDir, capture: false, "dotnet", "test", $"{product}.slnx", "-c", "Release", "-v", "q", "--nologo");
+        Run(targetDir, capture: false, "dotnet", "test", "--solution", $"{product}.slnx", "-c", "Release");
     }
     else
     {

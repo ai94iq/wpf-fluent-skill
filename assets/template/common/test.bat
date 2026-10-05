@@ -7,7 +7,8 @@ rem Full output goes to artifacts\logs\test.log; the screen gets one line, or th
 rem error lines plus the log path on failure. Humans (no --no-pause) get the full log.
 if not exist "artifacts\logs" mkdir "artifacts\logs"
 
-dotnet test "__Product__.slnx" -c Release -v q --nologo > "artifacts\logs\test.log" 2>&1
+rem MTP mode (global.json): extra flags are forwarded to the test host, so keep it minimal.
+dotnet test --solution "__Product__.slnx" -c Release > "artifacts\logs\test.log" 2>&1
 if %ERRORLEVEL% neq 0 goto :fail
 
 echo [test] OK
